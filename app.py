@@ -1,38 +1,41 @@
 import tkinter as tk
-import PageOne
+from selector import Selector
 
 class App (tk.Tk):
 
-    def __init__ (self, *pages):
+    def __init__ (self, config):
+        """
+        Setup Tkinter frames. The selector Frame holds a dropdown menu to
+        select which page Frame below should be shown. For each Frame in pages,
+        a Frame is created.
+        """
 
-        tk.Tk.__init__(self)
+        super().__init__()
+      
+        # Setup grid
+        for r in range(8):
+            self.rowconfigure(r, weight = 1)
+        for c in range(1):
+            self.columnconfigure(c, weight = 1)
 
-        self.container = tk.Frame(self)
-        self.container.pack(side = "top", fill = "both", expand = True)
-        self.container.grid_rowconfigure(0, weight = 1)
-        self.container.grid_columnconfigure(0, weight = 1)
+        # Create selector frame
+        self.frame_selector = Selector(
+            [key for key, value in config.items()],
+            self.on_page_select_change,
+        )
+        self.frame_selector.grid(row = 0, column = 0)
 
-        # Drop down for selecting which page to go to
-        self.selected_page = tk.StringVar()
-        self.page_selector = tk.ComboBox(self, textvariable = self.selected_page)
-        self.page_selector.bind('<<ComboboxSelected>>', self.on_page_select_change)
-
-        # Pages
-        self.frames = {}
-
-        for page in pages:
-
-            frame = page(self.container, self)
-            self.frames[page.get_id()] = frame
-            frame.grid(row = 0, column = 0, sticky = "nsew")
-
-        self.selected_page['values'] = [frame.get_id() for frame in self.frames]
-
-    def switch_frame (self, frame):
-
-        self.show_frame(frame)
+        # Create page frames
+        self.frame_pages = {}
+        for key, value in config.items():
+            page = value(key)
+            self.frame_pages[key] = page
+            self.frame_pages[key].grid(row = 1, column = 0, sticky = "nsew")
 
     def on_page_select_change (self, event):
+        """
+        Raise the appropriate page frame given the ID.
+        """
 
-        selection = self.selected_page.get()
-        print(selection)
+        selected_id = self.frame_selector.selected_page.get()
+        self.frame_pages[selected_id].tkraise()

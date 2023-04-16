@@ -1,12 +1,10 @@
 import tkinter as tk
-import Page
+from page import Page
 
 class PageThree (Page):
 
-    def __init__ (self, id, parent):
+    def __init__ (self, id):
 
-        super().__init__(self, id, parent)
+        super().__init__(id)
 
-    def get_id (self):
-
-        return self.id
+ 

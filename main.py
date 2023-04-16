@@ -1,15 +1,19 @@
-import App
-import PageOne
-import PageTwo
-import PageThree
+import json
+from app import App
+from page_one import PageOne
+from page_two import PageTwo
+from page_three import PageThree
 
-def main:
+def main ():
 
-    app = App(
-        PageOne,
-        PageTwo,
-        PageThree
-    )
+    config = {
+    
+        "1" : PageOne,
+        "2" : PageTwo
+    
+    }
+
+    app = App(config)
     app.mainloop()
 
 if __name__ == "__main__":
