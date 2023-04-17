@@ -3,6 +3,6 @@ from page import Page
 
 class PageTwo (Page):
 
-    def __init__ (self, id):
+    def __init__ (self):
 
-        super().__init__(id)
+        super().__init__("Page Two")

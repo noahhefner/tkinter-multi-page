@@ -3,8 +3,8 @@ from page import Page
 
 class PageThree (Page):
 
-    def __init__ (self, id):
+    def __init__ (self):
 
-        super().__init__(id)
+        super().__init__("Page Three")
 
  

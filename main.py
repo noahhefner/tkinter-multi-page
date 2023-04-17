@@ -6,14 +6,11 @@ from page_three import PageThree
 
 def main ():
 
-    config = {
-    
-        "1" : PageOne,
-        "2" : PageTwo
-    
-    }
-
-    app = App(config)
+    app = App([
+        PageOne,
+        PageTwo,
+        PageThree
+    ])
     app.mainloop()
 
 if __name__ == "__main__":
